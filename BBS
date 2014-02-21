@@ -1,0 +1,42 @@
+#!/usr/bin/env perl
+use Mojolicious::Lite;
+use utf8;
+
+my @entries = ();
+
+get '/' => sub {
+  my $self = shift;
+  $self->stash(
+    entries => \@entries
+  );
+  $self->render('index');
+};
+
+post '/post' => sub {
+  my $self = shift;
+  my $body = $self->param('body');
+  push @entries, $body;
+  $self->stash(body => $body);
+  $self->redirect_to('/');
+};
+
+app->start;
+__DATA__
+
+@@ index.html.ep
+% layout 'default';
+% title '入力フォーム';
+%= form_for '/post' => method => 'POST' => begin
+  %= text_field 'body'
+  %= submit_button '投稿する'
+% end
+% for my $entry (@{$entries}) {
+    <p><%= $entry %></p>
+% }
+
+@@ layouts/default.html.ep
+<!DOCTYPE html>
+<html>
+  <head><title><%= title %></title></head>
+  <body><%= content %></body>
+</html>
