@@ -32,7 +32,7 @@ Mojolicious を使って Web アプリケーションを作ろう!
 
 - `Mojolicious::Lite` は `Mojolicious` の Lite 版
 - `Mojolicious::Lite` は 1 つのスクリプトで複数のページを作成
--- `Mojolicious` は 1 ページ= 1 スクリプト
+  - `Mojolicious` は 1 ページ= 1 スクリプト
 
 ## コード解説
 
