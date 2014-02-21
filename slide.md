@@ -3,7 +3,10 @@
 # 今日の内容
 Mojolicious を使って Web アプリケーションを作ろう!
 
-# 準備
+- Mojolicious 入門
+- BBS 作成
+
+## 準備
 - Mojolicious
 
 ## Mojolicious のインストール
