@@ -176,3 +176,53 @@ Mojolicious を使って Web アプリケーションを作ろう!
 ## GET
 - ここまで出来たら, 保存してから, ブラウザをリロード (あるいは[http://localhost:3000](http://localhost:3000)にアクセス)
 - フォームに文字を入力して, ボタンをクリックしてみよう
+
+## POST
+- 先ほどのフォームは HTTP でいうところのGETでのリクエスト
+- GET でのリクエストは文字数の制限(おおよそ 2KB 程度)があるので、掲示板のような多くのデータを送信する必要がある場合は適さない
+  - このような場合は POST によるリクエストを行う
+
+## POST
+    @@ post.html.ep # テンプレート名を変更
+    % layout 'default';
+    % title '出力'; # タイトルを変更
+    %= form_for '/post' => method => 'POST' => begin # 投稿先などを変更
+      %= text_field 'body'
+      %= submit_button '投稿する'
+    % end
+    <p><%= $body %></p>
+
+- `index.html.ep` の部分をコピーして, `post.html.ep` というテンプレートを作成する
+- `form\_for` に書いた `method => 'POST'` で, get ではなく post で送信するようになる
+
+## POST
+    @@ index.html.ep
+    % layout 'default';
+    % title '入力フォーム'; # タイトルを変更
+    %= form_for '/post' => method => 'POST' => begin # 投稿先などを変更
+      %= text_field 'body'
+      %= submit_button '投稿する'
+    % end
+
+- `@@ index.html.ep` は `$body` を表示させないようにする
+- その他, メソッドやタイトルも変更しておこう
+
+## POST
+    get '/' => sub {
+      my $self = shift;
+      $self->render('index');
+    };
+
+    post '/post' => sub {
+      my $self = shift;
+      my $body = $self->param('body');
+      $self->stash(body => $body);
+      $self->render('post');
+    };
+
+- perl コードも変更しよう
+  - 細々とした違いに注意!
+
+## POST
+- ここまで出来たら, 保存してから, ブラウザをリロード (あるいは[http://localhost:3000](http://localhost:3000)にアクセス)
+- フォームに長い文字を入力して, ボタンをクリックしてみよう
