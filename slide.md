@@ -282,4 +282,4 @@ Mojolicious を使って Web アプリケーションを作ろう!
     };
 
 - `redirect\_to` 関数を追加する
-  - `@@ post.html.ep` は必要ないので, 削除しても問題ありません
+  - `@@ post.html.ep` は必要ないので, 削除しても問題ない
