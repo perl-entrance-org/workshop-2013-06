@@ -20,11 +20,11 @@ Mojolicious を使って Web アプリケーションを作ろう!
 
 ## 雛形を作る
 
-    $ mojo generate lite_app BBS
+    $ mojo generate lite_app hello
 
 ## 起動
 
-    $ morbo ./BBS
+    $ morbo ./hello
 
 - Web ブラウザで `localhost:3000` にアクセスしてみましょう
 
@@ -98,10 +98,15 @@ Mojolicious を使って Web アプリケーションを作ろう!
     <html>
     <head><title><%= $name %>のプロフィール</title></head>
     <body style='padding: 30px;'>
-    私の名前は<%= $name %>です.<br>
-    趣味は<%= $hobby %>で, 好きなプログラミング言語は<%= $language %>です.
+      私の名前は<%= $name %>です.<br>
+      趣味は<%= $hobby %>で, 好きなプログラミング言語は<%= $language %>です.
     </body>
     </html>
 
 - このようなテンプレートを用意し, stash で `name`, `hobby`, `language` 変数に値を代入し, 自己紹介ページを作成しよう
-- `render` で profile テンプレートを指定する
+  - `render` で profile テンプレートを指定する
+
+# BBS
+
+## 雛形を作る
+    $ mojo generate lite_app BBS
