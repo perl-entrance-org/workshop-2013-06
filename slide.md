@@ -78,4 +78,27 @@ Mojolicious を使って Web アプリケーションを作ろう!
     </html>
 
 - `localhost:3000` のソースと見比べてみましょう
-- `<%= xxx %>` がテンプレートの中で使用できる変数に相当する 
+- `<%= xxx %>` がテンプレートの中で使用できる変数に相当する
+
+## 変数を渡す
+    get '/' => sub {
+      my $self = shift;
+      $self->stash(title => 'Hello');
+      $self->render('index');
+    };
+    % title 'Welcome'; # => 削除する
+
+- `$self->stash` で, テンプレート内の変数に変数を渡せる
+
+## 練習問題
+    @@ profile.html.ep
+    <html>
+    <head><title><%= $name %>のプロフィール</title></head>
+    <body style='padding: 30px;'>
+    私の名前は<%= $name %>です.<br>
+    趣味は<%= $hobby %>で, 好きなプログラミング言語は<%= $language %>です.
+    </body>
+    </html>
+
+- このようなテンプレートを用意し, stash で `name`, `hobby`, `language` 変数に値を代入し, 自己紹介ページを作成しよう
+- `render` で profile テンプレートを指定する
