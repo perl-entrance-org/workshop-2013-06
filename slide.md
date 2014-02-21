@@ -226,3 +226,60 @@ Mojolicious を使って Web アプリケーションを作ろう!
 ## POST
 - ここまで出来たら, 保存してから, ブラウザをリロード (あるいは[http://localhost:3000](http://localhost:3000)にアクセス)
 - フォームに長い文字を入力して, ボタンをクリックしてみよう
+
+## 記事を蓄える
+- DB
+- 外部ファイル
+
+今回, 時間の制約上データを蓄える方法として, **配列**を用いる
+
+## 記事を蓄える
+    @@ index.html.ep
+    % layout 'default';
+    % title '入力フォーム';
+    %= form_for '/post' => method => 'POST' => begin
+      %= text_field 'body'
+      %= submit_button '投稿する'
+    % end
+    % for my $entry (@{$entries}) {
+        <p><%= $entry %></p>
+    % }
+
+- テンプレートに 3 行ほど追記する
+- 先頭に `%` を書くことで, perl コードを埋めこむことができる
+
+## 記事を蓄える
+    my @entries = (); # 空の配列を宣言
+    get '/' => sub {
+      my $self = shift;
+      $self->stash(entries => \@entries); # 配列のリファレンスをテンプレートに渡す
+      $self->render('index');
+    };
+
+    post '/post' => sub {
+      my $self = shift;
+      my $body = $self->param('body');
+      push @entries, $body; # 配列に格納
+      $self->stash(body => $body);
+      $self->render('post');
+    };
+
+## 記事を蓄える
+- ここまで出来たら, 保存してから, ブラウザをリロード (あるいは[http://localhost:3000](http://localhost:3000)にアクセス)
+- 文字の投稿をいくつか繰り返した後に, [http://localhost:3000](http://localhost:3000)にアクセスしよう
+
+## リダイレクト
+- 記事を投稿した後に記事を表示するページに戻る
+- Mojolicious ビルトインの `redirect\_to` を使用する
+
+## redirect\_to
+    post '/post' => sub {
+      my $self = shift;
+      my $body = $self->param('body');
+      push @entries, $body;
+      $self->stash(body => $body);
+      $self->redirect_to('/'); # 追加
+    };
+
+- `redirect\_to` 関数を追加する
+  - `@@ post.html.ep` は必要ないので, 削除しても問題ありません
