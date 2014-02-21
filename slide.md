@@ -110,3 +110,69 @@ Mojolicious を使って Web アプリケーションを作ろう!
 
 ## 雛形を作る
     $ mojo generate lite_app BBS
+
+## use utf8;
+- `use utf8;` した状態の Perl は日本語などのマルチバイト文字でも、文字として正しく扱うことができる
+- ターミナルで試してみよう
+    # use utf8;していない状態
+    $ perl -e 'print length "abcあいう";'
+    # use utf8;した状態
+    $ perl -Mutf8 -e 'print length "abcあいう";'
+
+## PODRENDER
+    # Documentation browser under "/perldoc" # 削除
+    plugin 'PODRenderer'; # 削除
+
+- PODRENDER は Mojolicious プラグインで, perldoc を綺麗に見るためのもの
+- 削除する前に、[localhost:3000/perldoc](http://localhost:3000/perldoc) にアクセスしてみよう
+
+## FORM 作成
+    Welcome to the Mojolicious real-time web framework! # 削除
+
+- もともとの文字列を削除する
+
+## FORM 作成
+    %= form_for '/' => begin
+      %= text_field 'body'
+      %= submit_button '投稿する'
+    % end
+
+- 削除したところに, フォームを出力するコードを書く
+  - form\_for, text\_field, submit\_buttonなどは Mojolicious のhelperという機能で定義されたPerlの関数(サブルーチン)
+
+## FORM 作成
+- ここまで出来たら, 保存してから, ブラウザをリロード (あるいは[http://localhost:3000](http://localhost:3000)にアクセス)
+- しかし, フォームから投稿しても画面上は何も変わらない. 次に, フォームから投稿された文字列を画面に表示するようにしてみよう
+
+## GET
+      %= submit_button '投稿する'
+    % end
+    <p><%= $body %></p>
+
+- まずはテンプレートを上記のように変更する
+- `<%= $body %> は, テンプレート内の変数
+
+## GET
+    get '/' => sub {
+      my $self = shift;
+      my $body = $self->param('body'); # 追加
+      $self->render('index');
+    };
+
+- form の情報を取得するために, 上記のように 1 行追加する
+- `$self->param('body')` は フォームから投稿した `body` という名前の値を取得する
+
+## GET
+    get '/' => sub {
+      my $self = shift;
+      my $body = $self->param('body');
+      $self->stash(body => $body); # 追加
+      $self->render('index');
+    };
+
+- 取得した情報をテンプレートに渡すため, `$self->stash(body => $body)` を挿入する
+- `body` に変数 `$body` を渡したので, テンプレートで `$body` が使用可能になる
+
+## GET
+- ここまで出来たら, 保存してから, ブラウザをリロード (あるいは[http://localhost:3000](http://localhost:3000)にアクセス)
+- フォームに文字を入力して, ボタンをクリックしてみよう
