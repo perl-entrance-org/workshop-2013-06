@@ -14,9 +14,9 @@ get '/' => sub {
 
 post '/post' => sub {
   my $self = shift;
-  my $body = $self->param('body');
-  push @entries, $body;
-  $self->stash(body => $body);
+  my $entry = $self->param('body');
+  push @entries, $entry;
+  $self->stash(body => $entry);
   $self->redirect_to('/');
 };
 

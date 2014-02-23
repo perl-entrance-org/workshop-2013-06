@@ -147,15 +147,15 @@ Mojolicious を使って Web アプリケーションを作ろう!
 ## GET
       %= submit_button '投稿する'
     % end
-    <p><%= $body %></p>
+    <p><%= $entry %></p>
 
 - まずはテンプレートを上記のように変更する
-- `<%= $body %> は, テンプレート内の変数
+- `<%= $entry %> は, テンプレート内の変数
 
 ## GET
     get '/' => sub {
       my $self = shift;
-      my $body = $self->param('body'); # 追加
+      my $entry = $self->param('body'); # 追加
       $self->render('index');
     };
 
@@ -165,13 +165,13 @@ Mojolicious を使って Web アプリケーションを作ろう!
 ## GET
     get '/' => sub {
       my $self = shift;
-      my $body = $self->param('body');
-      $self->stash(body => $body); # 追加
+      my $entry = $self->param('body');
+      $self->stash(body => $entry); # 追加
       $self->render('index');
     };
 
-- 取得した情報をテンプレートに渡すため, `$self->stash(body => $body)` を挿入する
-- `body` に変数 `$body` を渡したので, テンプレートで `$body` が使用可能になる
+- 取得した情報をテンプレートに渡すため, `$self->stash(body => $entry)` を挿入する
+- `body` に変数 `$entry` を渡したので, テンプレートで `$entry` が使用可能になる
 
 ## GET
 - ここまで出来たら, 保存してから, ブラウザをリロード (あるいは[http://localhost:3000](http://localhost:3000)にアクセス)
@@ -190,7 +190,7 @@ Mojolicious を使って Web アプリケーションを作ろう!
       %= text_field 'body'
       %= submit_button '投稿する'
     % end
-    <p><%= $body %></p>
+    <p><%= $entry %></p>
 
 - `index.html.ep` の部分をコピーして, `post.html.ep` というテンプレートを作成する
 - `form\_for` に書いた `method => 'POST'` で, get ではなく post で送信するようになる
@@ -204,7 +204,7 @@ Mojolicious を使って Web アプリケーションを作ろう!
       %= submit_button '投稿する'
     % end
 
-- `@@ index.html.ep` は `$body` を表示させないようにする
+- `@@ index.html.ep` は `$entry` を表示させないようにする
 - その他, メソッドやタイトルも変更しておこう
 
 ## POST
@@ -215,8 +215,8 @@ Mojolicious を使って Web アプリケーションを作ろう!
 
     post '/post' => sub {
       my $self = shift;
-      my $body = $self->param('body');
-      $self->stash(body => $body);
+      my $entry = $self->param('body');
+      $self->stash(body => $entry);
       $self->render('post');
     };
 
@@ -258,9 +258,9 @@ Mojolicious を使って Web アプリケーションを作ろう!
 
     post '/post' => sub {
       my $self = shift;
-      my $body = $self->param('body');
-      push @entries, $body; # 配列に格納
-      $self->stash(body => $body);
+      my $entry = $self->param('body');
+      push @entries, $entry; # 配列に格納
+      $self->stash(body => $entry);
       $self->render('post');
     };
 
@@ -275,9 +275,9 @@ Mojolicious を使って Web アプリケーションを作ろう!
 ## redirect\_to
     post '/post' => sub {
       my $self = shift;
-      my $body = $self->param('body');
-      push @entries, $body;
-      $self->stash(body => $body);
+      my $entry = $self->param('body');
+      push @entries, $entry;
+      $self->stash(body => $entry);
       $self->redirect_to('/'); # 追加
     };
 
