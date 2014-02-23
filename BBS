@@ -5,19 +5,19 @@ use utf8;
 my @entries = ();
 
 get '/' => sub {
-  my $self = shift;
-  $self->stash(
-    entries => \@entries
-  );
-  $self->render('index');
+    my $self = shift;
+    $self->stash(
+        entries => \@entries
+    );
+    $self->render('index');
 };
 
 post '/post' => sub {
-  my $self = shift;
-  my $entry = $self->param('body');
-  push @entries, $entry;
-  $self->stash(body => $entry);
-  $self->redirect_to('/');
+    my $self = shift;
+    my $entry = $self->param('body');
+    push @entries, $entry;
+    $self->stash(body => $entry);
+    $self->redirect_to('/');
 };
 
 app->start;
