@@ -31,7 +31,7 @@ Mojolicious を使って Web アプリケーションを作ろう!
 # HTTP の基礎
 
 ## HTTP の基礎
-- HTTP ... Hypertext Transfer Protocol
+- HTTP ... HypeTtext Transfer Protocol
     - Web ブラウザと Web サーバの間でコンテンツの送受信を行うためのプロトコル
 - 基本的な考え方は, サーバに｢何を｣｢どうしたいか｣を伝える
     - ｢何を｣が URL , ｢どうしたいか｣がメソッド
@@ -234,7 +234,7 @@ Mojolicious を使って Web アプリケーションを作ろう!
     get '/' => sub {
       my $self = shift;
       my $entry = $self->param('body');
-      $self->stash(body => $entry); # 追加
+      $self->stash(entry => $entry); # 追加
       $self->render('index');
     };
 
