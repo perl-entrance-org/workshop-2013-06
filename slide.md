@@ -31,7 +31,7 @@ Mojolicious を使って Web アプリケーションを作ろう!
 # HTTP の基礎
 
 ## HTTP の基礎
-- HTTP ... HypeTtext Transfer Protocol
+- HTTP ... HyperText Transfer Protocol
     - Web ブラウザと Web サーバの間でコンテンツの送受信を行うためのプロトコル
 - 基本的な考え方は, サーバに｢何を｣｢どうしたいか｣を伝える
     - ｢何を｣が URL , ｢どうしたいか｣がメソッド
@@ -218,7 +218,7 @@ Mojolicious を使って Web アプリケーションを作ろう!
     <p><%= $entry %></p>
 
 - まずは `index` テンプレートを上記のように変更する
-- `<%= $entry %> は, テンプレート内の変数
+- `<%= $entry %>` は, テンプレート内の変数
 
 ## GET
     get '/' => sub {
@@ -238,8 +238,8 @@ Mojolicious を使って Web アプリケーションを作ろう!
       $self->render('index');
     };
 
-- 取得した情報をテンプレートに渡すため, `$self->stash(body => $entry)` を挿入する
-- `body` に変数 `$entry` を渡したので, テンプレートで `$entry` が使用可能になる
+- 取得した情報をテンプレートに渡すため, `$self->stash(entry => $entry)` を挿入する
+- `entry` に変数 `$entry` を渡したので, テンプレートで `$entry` が使用可能になる
 
 ## GET
 - ここまで出来たら, 保存してからブラウザをリロード (あるいは[http://localhost:3000](http://localhost:3000)にアクセス) してみよう
@@ -261,7 +261,7 @@ Mojolicious を使って Web アプリケーションを作ろう!
     <p><%= $entry %></p>
 
 - `index.html.ep` の部分をコピーして, `post.html.ep` というテンプレートを作成する
-- `form\_for` に書いた `method => 'POST'` で, get ではなく post で送信するようになる
+- `form_for` に書いた `method => 'POST'` で, get ではなく post で送信するようになる
 
 ## POST
     @@ index.html.ep
@@ -284,7 +284,7 @@ Mojolicious を使って Web アプリケーションを作ろう!
     post '/post' => sub {
       my $self = shift;
       my $entry = $self->param('body');
-      $self->stash(body => $entry);
+      $self->stash(entry => $entry);
       $self->render('post');
     };
 
@@ -329,7 +329,7 @@ Mojolicious を使って Web アプリケーションを作ろう!
       my $self = shift;
       my $entry = $self->param('body');
       push @entries, $entry; # 配列に格納
-      $self->stash(body => $entry);
+      $self->stash(entry => $entry);
       $self->render('post');
     };
 
@@ -340,18 +340,18 @@ Mojolicious を使って Web アプリケーションを作ろう!
 ## リダイレクト
 - 別のページへ遷移(移動)するための機能
     - 今回の場合, `/post`で記事を投稿した後に記事を表示するページである`/`に戻るようにする
-- Mojolicious ビルトインの `redirect\_to` を使用すればよい
+- Mojolicious ビルトインの `redirect_to` を使用すればよい
 
 ## redirect\_to
     post '/post' => sub {
       my $self = shift;
       my $entry = $self->param('body');
       push @entries, $entry;
-      $self->stash(body => $entry);
+      $self->stash(entry => $entry);
       $self->redirect_to('/'); # 追加
     };
 
-- `redirect\_to` を利用して, `/`へのページ遷移を追加する
+- `redirect_to` を利用して, `/`へのページ遷移を追加する
   - `post`のテンプレートはもう必要ないので, 削除しても問題ない
 
 ## 最終問題
